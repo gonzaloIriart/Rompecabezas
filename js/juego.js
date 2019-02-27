@@ -2,7 +2,7 @@
 var instrucciones = ["Utilizar las flechas para mover las piezas","Ordenar las piezas para llegar a la imagen objetivo"];
 // Arreglo para ir guardando los movimientos que se vayan realizando
 var movimientos = [];
-
+let puntuacion = 5000;
 // Representación de la grilla. Cada número representa a una pieza.
 // El 9 es la posición vacía
 var grilla = [
@@ -10,11 +10,22 @@ var grilla = [
     [4, 5, 6],
     [7, 8, 9]
 ];
+var grillaGanadora = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+];
 
 /* Estas dos variables son para guardar la posición de la pieza vacía. 
 Esta posición comienza siendo la [2, 2]*/
 var filaVacia = 2;
 var columnaVacia = 2;
+
+function agregarMovimientosAlArray(movimiento){
+ movimientos.push(movimiento);
+ actualizarUltimoMovimiento(movimiento);
+}
+
 
 /* Esta función deberá recorrer el arreglo de instrucciones pasado por parámetro. 
 Cada elemento de este arreglo deberá ser mostrado en la lista con id 'lista-instrucciones'. 
@@ -36,40 +47,55 @@ y utilice actualizarUltimoMovimiento para mostrarlo en pantalla */
 Existen diferentes formas de hacer este chequeo a partir de la grilla. */
 function chequearSiGano() {
     //COMPLETAR
+let gano = false;
+    for(i = 0;i < grilla.length; i++){
+      for(j = 0;j < grilla[i].length; j++){
+        if(grilla[i][j] === grillaGanadora[i][j]){
+          gano = true;        
+        }else{
+          gano = false;
+        }
+      }
+    }
+    if (gano){
+      mostrarCartelGanador();
+    }
 }
 
 // Implementar alguna forma de mostrar un cartel que avise que ganaste el juego
 function mostrarCartelGanador() {
-    //COMPLETAR
+  //  alert("Objetivo cumplido\n Tu puntuacion es de: " + puntuacion);//COMPLETAR
 }
 
 /* Función que intercambia dos posiciones en la grilla.
 Pensar como intercambiar dos posiciones en un arreglo de arreglos. 
 Para que tengas en cuenta:
 Si queremos intercambiar las posiciones [1,2] con la [0, 0], si hacemos: 
-var a = arreglo[1][2];
-var b = arreglo[0][0];
-[a,b]= [b,a];
+
 
 En vez de intercambiar esos valores vamos a terminar teniendo en ambas posiciones el mismo valor.
 Se te ocurre cómo solucionar esto con una variable temporal?
 */
 function intercambiarPosicionesGrilla(filaPos1, columnaPos1, filaPos2, columnaPos2) {
     //COMPLETAR
-    var a = arreglo[filaPos1,columnaPos1];
-    var b = arreglo[filaPos2,columnaPos2];
+    var a = grilla[filaPos1,columnaPos1];
+
+    var b = grilla[filaPos2,columnaPos2];
+
     [a,b] = [b,a];
 }
 
 // Actualiza la posición de la pieza vacía
 function actualizarPosicionVacia(nuevaFila, nuevaColumna) {
     //COMPLETAR
+    filaVacia= nuevaFila;
+    columnaVacia = nuevaColumna;
 }
 
 
 // Para chequear si la posicón está dentro de la grilla.
 function posicionValida(fila, columna) {
-   return (fila<=2 && fila>0 && columna<=2 && columna>0);
+   return (fila<=2 && fila>=0 && columna<=2 && columna>=0);
 }
 
 /* Movimiento de fichas, en este caso la que se mueve es la blanca intercambiando su posición con otro elemento.
@@ -111,7 +137,7 @@ function moverEnDireccion(direccion) {
         actualizarPosicionVacia(nuevaFilaPiezaVacia, nuevaColumnaPiezaVacia);
 
   //COMPLETAR: Agregar la dirección del movimiento al arreglo de movimientos
-
+      agregarMovimientosAlArray(direccion);
     }
 }
 
@@ -249,7 +275,7 @@ y ejecutando la función para que se capturen las teclas que
 presiona el usuario */
 function iniciar() {
     mostrarInstrucciones(instrucciones);
-    mezclarPiezas(30);
+    mezclarPiezas(60);
     capturarTeclas();
 }
 

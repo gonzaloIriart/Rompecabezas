@@ -83,3 +83,8 @@ li::before {
   grid-template-rows:repeat(3,1fr);  
  
 }
+
+#footer{
+  margin-top: 25px;
+  color: #5c5b5b;
+}
