@@ -6,6 +6,17 @@ body {
   min-height: 100%;
   background-image: url(../images/adventure.jpg);
 }
+
+button{
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
 ul {
   padding-left: 0;
   list-style: none;
@@ -40,12 +51,22 @@ li::before {
 
 }
 
-#flecha{
-  font-size: 60px;
+.grilla{
+  display: grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);  
+}
+
+.contenedor-botones{
+  margin: 50px;
 }
 
 .texto-centrado {
   text-align: center;
+}
+
+#flecha{
+  font-size: 60px;
 }
 
 #juego div {
@@ -78,13 +99,18 @@ li::before {
 #img-objetivo{
   width: 150px;
   height: 150px;
-  display: grid;
-  grid-template-columns:repeat(3,1fr);
-  grid-template-rows:repeat(3,1fr);  
- 
+  display: flex;   
 }
 
 #footer{
   margin-top: 25px;
   color: #5c5b5b;
+}
+
+#hora-de-aventuras{
+  background-color: #008CBA;
+}
+
+#tabla-boton{
+  margin-bottom: 30px;
 }

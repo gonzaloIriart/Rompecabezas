@@ -1,8 +1,54 @@
+window.onload=function(){
+    var horaDeAventuras = document.getElementById("hora-de-aventuras");
+    var pikachu = document.getElementById("pikachu");   
+    
+
+    pikachu.addEventListener("click", function(){
+        document.getElementById("1").src = "images/1.jpg";
+       document.getElementById("2").src = "images/2.jpg";
+       document.getElementById("3").src = "images/3.jpg";
+       document.getElementById("4").src = "images/4.jpg";
+       document.getElementById("5").src = "images/5.jpg";
+       document.getElementById("6").src = "images/6.jpg";
+       document.getElementById("7").src = "images/7.jpg";
+       document.getElementById("8").src = "images/8.jpg";
+       document.getElementById("img-objetivo").innerHTML = '<div class="grilla"><img class="imagen-pieza" src="images/1.jpg"><img class="imagen-pieza" src="images/2.jpg"><img class="imagen-pieza" src="images/3.jpg"><img class="imagen-pieza" src="images/4.jpg"><img class="imagen-pieza" src="images/5.jpg"><img class="imagen-pieza" src="images/6.jpg"><img class="imagen-pieza" src="images/7.jpg"><img class="imagen-pieza" src="images/8.jpg"></div>';
+       iniciar();
+      },true);
+      
+    
+    
+
+    horaDeAventuras.addEventListener("click", function(){
+        
+       document.getElementById("1").src = "images/10.jpg";
+       document.getElementById("2").src = "images/20.jpg";
+       document.getElementById("3").src = "images/30.jpg";
+       document.getElementById("4").src = "images/40.jpg";
+       document.getElementById("5").src = "images/50.jpg";
+       document.getElementById("6").src = "images/60.jpg";
+       document.getElementById("7").src = "images/70.jpg";
+       document.getElementById("8").src = "images/80.jpg";
+       document.getElementById("img-objetivo").innerHTML = '<img class="imagen-pieza" src="images/final.png">';
+       iniciar();
+      },true);
+      /*display: grid;
+      grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);  */ 
+    
+}
+
+
 // Arreglo que contiene las intrucciones del juego 
 let instrucciones = ["Utilizar las flechas para mover las piezas", "Ordenar las piezas para llegar a la imagen objetivo"];
 // Arreglo para ir guardando los movimientos que se vayan realizando
 let movimientos = [];
-let puntuacion = 5000;
+
+let puntuacion;
+let nombre;
+//Arreglo de puntuaciones para realizar tabla de mejores resultados
+let puntuaciones = [["J1", 5000],["Señor X", 1500],["Tompson", 3000]];
+
 // Representación de la grilla. Cada número representa a una pieza.
 // El 9 es la posición vacía
 let grilla = [
@@ -11,12 +57,49 @@ let grilla = [
     [7, 8, 9]
 ];
 
+//Utilizado para no repetir las instrucciones cuando se clickeen los botones
+let flag = true;
 
 /* Estas dos variables son para guardar la posición de la pieza vacía. 
 Esta posición comienza siendo la [2, 2]*/
 let filaVacia = 2;
 let columnaVacia = 2;
 
+//Restador de puntos por tiempo en segundos.
+window.setInterval("restarPuntosPorSegundo()",1000);
+
+//Boton de mostrar tabla en HTML
+var botonTabla = document.getElementById("tabla-boton");
+botonTabla.addEventListener("click", function(){
+    ordenarPuntuaciones();
+    var tablaPuntos = document.getElementById("tabla-puntos"); 
+    var tabla   = document.createElement("table");
+    var tblBody = document.createElement("tbody");
+    // Crea las celdas
+  for (var i = 0; i < puntuaciones.length; i++) {
+    // Crea las hileras de la tabla
+    var hilera = document.createElement("tr"); 
+    
+      // Crea un elemento <td> y un nodo de texto, haz que el nodo de
+      // texto sea el contenido de <td>, ubica el elemento <td> al final
+      // de la hilera de la tabla
+      var celda = document.createElement("td");
+      var textoCelda = document.createTextNode("Nombre del Jugador: "+ puntuaciones[i][0] +", Puntuacion:  "+ puntuaciones[i][1]);
+      celda.appendChild(textoCelda);
+      hilera.appendChild(celda);
+    
+ 
+    // agrega la hilera al final de la tabla (al final del elemento tblbody)
+    tblBody.appendChild(hilera);
+  }
+ 
+  // posiciona el <tbody> debajo del elemento <table>
+  tabla.appendChild(tblBody);
+  // appends <table> into <body>
+  tablaPuntos.appendChild(tabla);
+  // modifica el atributo "border" de la tabla y lo fija a "2";
+  tabla.setAttribute("border", "2");
+},true);
 
 
 
@@ -25,12 +108,13 @@ Cada elemento de este arreglo deberá ser mostrado en la lista con id 'lista-ins
 Para eso deberás usar la función ya implementada mostrarInstruccionEnLista().
 Podés ver su implementación en la ultima parte de este codigo. */
 function mostrarInstrucciones(instrucciones) {
-    for (var i = 0; i < instrucciones.length; i++) {
+   for (var i = 0; i < instrucciones.length; i++) {
         var ul = document.getElementById("lista-instrucciones");
         var li = document.createElement("li");
         li.appendChild(document.createTextNode(instrucciones[i]));
         ul.appendChild(li);
-    }
+       }
+    
 }
 
 /* COMPLETAR: Crear función que agregue la última dirección al arreglo de movimientos
@@ -38,7 +122,16 @@ y utilice actualizarUltimoMovimiento para mostrarlo en pantalla */
 
 function agregarMovimientosAlArray(movimiento) {
     movimientos.push(movimiento);
-    actualizarUltimoMovimiento(movimiento);
+    actualizarUltimoMovimiento(movimiento);    
+}
+
+function restarPuntos(){
+    puntuacion-= 15;
+    console
+}
+function restarPuntosPorSegundo(){
+    puntuacion-= 3;
+    console
 }
 
 /* Esta función va a chequear si el Rompecabezas esta en la posicion ganadora. 
@@ -51,7 +144,7 @@ function chequearSiGano() {
         for (j = 0; j < grilla[i].length; j++) {
             suma++;
             if (grilla[i][j] !== suma) {
-                gano = false;
+                gano = false;               
                 break;
             }
         }
@@ -61,7 +154,7 @@ function chequearSiGano() {
 
 // Implementar alguna forma de mostrar un cartel que avise que ganaste el juego
 function mostrarCartelGanador() {
-    alert("Objetivo cumplido\n Tu puntuacion es de: " + puntuacion); //COMPLETAR
+    alert("Objetivo cumplido, "+ nombre +"\n Tu puntuacion es de: " + puntuacion); //COMPLETAR
 
 }
 
@@ -136,8 +229,13 @@ function moverEnDireccion(direccion) {
 
         //COMPLETAR: Agregar la dirección del movimiento al arreglo de movimientos
         agregarMovimientosAlArray(direccion);
+        restarPuntos();
 
     }
+}
+
+function llenarTabla(){
+    document.getElementById("tabla-puntos").innerHTML = '<img class="imagen-pieza" src="images/final.png">';
 }
 
 
@@ -261,7 +359,10 @@ function capturarTeclas() {
             var gano = chequearSiGano();
             if (gano) {
                 setTimeout(function() {
+                    nombre = prompt("Por favor ingrese su nombre");
                     mostrarCartelGanador();
+                    puntuaciones.push([nombre,puntuacion]);
+                    
                 }, 500);
             }
             evento.preventDefault();
@@ -269,14 +370,33 @@ function capturarTeclas() {
     })
 }
 
+function ordenarPuntuaciones(){
+    var minIdx, temp, 
+      len = puntuaciones.length;
+  for(var i = 0; i < len; i++){
+    minIdx = i;
+    for(var  j = i+1; j<len; j++){
+       if(puntuaciones[j][1]>puntuaciones[minIdx][1]){
+          minIdx = j;
+       }
+    }
+    temp = puntuaciones[i];
+    puntuaciones[i] = puntuaciones[minIdx];
+    puntuaciones[minIdx] = temp;
+  }
+}  
 /* Se inicia el rompecabezas mezclando las piezas 60 veces 
 y ejecutando la función para que se capturen las teclas que 
 presiona el usuario */
 function iniciar() {
-    mostrarInstrucciones(instrucciones);
-    mezclarPiezas(60);
-    capturarTeclas();
+    
+    if(flag){
+     mostrarInstrucciones(instrucciones);
+     flag = false;
+    }    
+    mezclarPiezas(30);
+    puntuacion = 5000;
+    capturarTeclas();   
 }
 
-// Ejecutamos la función iniciar
-iniciar();
+

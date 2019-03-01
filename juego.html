@@ -8,6 +8,11 @@
 </head>
 
 <body>
+    <div class="contenedor-botones texto-centrado">
+        <button type="button" id="pikachu">Click Me for pikachu!</button>
+        <button type="button" id="hora-de-aventuras">Click Me for adventure time!</button>
+    </div>
+
     <div class="col-40">
 
         <div id="titulo">
@@ -23,15 +28,7 @@
 
                 <p>Lograr armar la imagen</p>
                 <div id="img-objetivo">
-                    <div><img class="imagen-pieza" src="images/1.jpg" alt=""></div>
-                    <div><img class="imagen-pieza" src="images/2.jpg" alt=""></div>
-                    <div><img class="imagen-pieza" src="images/3.jpg" alt=""></div>
-                    <div><img class="imagen-pieza" src="images/4.jpg" alt=""></div>
-                    <div><img class="imagen-pieza" src="images/5.jpg" alt=""></div>
-                    <div><img class="imagen-pieza" src="images/6.jpg" alt=""></div>
-                    <div><img class="imagen-pieza" src="images/7.jpg" alt=""></div>
-                    <div><img class="imagen-pieza" src="images/8.jpg" alt=""></div>
-                    <div></div>
+                        
                 </div>
             </div>
         </div>
@@ -45,20 +42,22 @@
     </div>
     <div class="col-60">
         <div id="juego">
-            <div id="pieza1"><img class="imagen-pieza" src="images/1.jpg" alt=""></div>
-            <div id="pieza2"><img class="imagen-pieza" src="images/2.jpg" alt=""></div>
-            <div id="pieza3"><img class="imagen-pieza" src="images/3.jpg" alt=""></div>
-            <div id="pieza4"><img class="imagen-pieza" src="images/4.jpg" alt=""></div>
-            <div id="pieza5"><img class="imagen-pieza" src="images/5.jpg" alt=""></div>
-            <div id="pieza6"><img class="imagen-pieza" src="images/6.jpg" alt=""></div>
-            <div id="pieza7"><img class="imagen-pieza" src="images/7.jpg" alt=""></div>
-            <div id="pieza8"><img class="imagen-pieza" src="images/8.jpg" alt=""></div>
+            <div id="pieza1"><img class="imagen-pieza" id = "1" alt=""></div>
+            <div id="pieza2"><img class="imagen-pieza" id = "2" alt=""></div>
+            <div id="pieza3"><img class="imagen-pieza" id = "3" alt=""></div>
+            <div id="pieza4"><img class="imagen-pieza" id = "4" alt=""></div>
+            <div id="pieza5"><img class="imagen-pieza" id = "5" alt=""></div>
+            <div id="pieza6"><img class="imagen-pieza" id = "6" alt=""></div>
+            <div id="pieza7"><img class="imagen-pieza" id = "7" alt=""></div>
+            <div id="pieza8"><img class="imagen-pieza" id = "8" alt=""></div>
             <div id="pieza9"></div>
         </div>
     </div>
-    <div id="puntuaciones"></div>
+    <button type="button" id="tabla-boton">Mostrar tabla de puntuaciones</button>
     <div id="footer">
         <p class="texto-centrado">Autor: Gonzalo T. Iriart - Proyecto Acamica</p>
+        
+        <div id="tabla-puntos"></div>
     </div>
     <script src="js/juego.js"></script>
 </body>
