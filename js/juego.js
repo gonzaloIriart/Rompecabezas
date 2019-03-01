@@ -75,11 +75,8 @@ En vez de intercambiar esos valores vamos a terminar teniendo en ambas posicione
 Se te ocurre cómo solucionar esto con una variable temporal?
 */
 function intercambiarPosicionesGrilla(filaPos1, columnaPos1, filaPos2, columnaPos2) {
-    let temporal = grilla[filaPos1][columnaPos1];
-
-    grilla[filaPos1][columnaPos1] = grilla[filaPos2][columnaPos2];
-    grilla[filaPos2][columnaPos2] = temporal;
-
+    //usando destructuring se puede realizar el intercambio sin necesidad de utilizar variables temporales
+    [grilla[filaPos1][columnaPos1], grilla[filaPos2][columnaPos2]] = [grilla[filaPos2][columnaPos2], grilla[filaPos1][columnaPos1]]
 
 }
 
