@@ -1,3 +1,4 @@
+//Carga botones para elegir el rompecabeza
 window.onload = function() {
     var horaDeAventuras = document.getElementById("hora-de-aventuras");
     var pikachu = document.getElementById("pikachu");
@@ -38,7 +39,6 @@ window.onload = function() {
 
 }
 
-
 // Arreglo que contiene las intrucciones del juego 
 let instrucciones = ["Utilizar las flechas para mover las piezas", "Ordenar las piezas para llegar a la imagen objetivo"];
 // Arreglo para ir guardando los movimientos que se vayan realizando
@@ -48,7 +48,7 @@ let puntuacion;
 let nombre;
 //Arreglo de puntuaciones para realizar tabla de mejores resultados
 let puntuaciones = [
-    ["J1", 5000],
+    ["J1", 4000],
     ["Señor X", 1500],
     ["Tompson", 3000]
 ];
@@ -106,7 +106,31 @@ botonTabla.addEventListener("click", function() {
     tabla.setAttribute("border", "2");
 }, true);
 
+//Ordena la tabla de puntuaciones de mayor a menor.
+function ordenarPuntuaciones() {
+    var minIdx, temp,
+        len = puntuaciones.length;
+    for (var i = 0; i < len; i++) {
+        minIdx = i;
+        for (var j = i + 1; j < len; j++) {
+            if (puntuaciones[j][1] > puntuaciones[minIdx][1]) {
+                minIdx = j;
+            }
+        }
+        temp = puntuaciones[i];
+        puntuaciones[i] = puntuaciones[minIdx];
+        puntuaciones[minIdx] = temp;
+    }
+}
 
+//Funciones de puntaje
+function restarPuntos() {
+    puntuacion -= 15;
+}
+
+function restarPuntosPorSegundo() {
+    puntuacion -= 3;
+}
 
 /* Esta función deberá recorrer el arreglo de instrucciones pasado por parámetro. 
 Cada elemento de este arreglo deberá ser mostrado en la lista con id 'lista-instrucciones'. 
@@ -128,16 +152,6 @@ y utilice actualizarUltimoMovimiento para mostrarlo en pantalla */
 function agregarMovimientosAlArray(movimiento) {
     movimientos.push(movimiento);
     actualizarUltimoMovimiento(movimiento);
-}
-
-function restarPuntos() {
-    puntuacion -= 15;
-    console
-}
-
-function restarPuntosPorSegundo() {
-    puntuacion -= 3;
-    console
 }
 
 /* Esta función va a chequear si el Rompecabezas esta en la posicion ganadora. 
@@ -174,14 +188,21 @@ En vez de intercambiar esos valores vamos a terminar teniendo en ambas posicione
 Se te ocurre cómo solucionar esto con una variable temporal?
 */
 function intercambiarPosicionesGrilla(filaPos1, columnaPos1, filaPos2, columnaPos2) {
-    //usando destructuring se puede realizar el intercambio sin necesidad de utilizar variables temporales
+    /*  Solucion con variable temporal
+        let temp = grilla[filaPos1][columnaPos1];
+
+        grilla[filaPos1][columnaPos1] = grilla[filaPos2][columnaPos2];
+        grilla[filaPos2][columnaPos2]= temp;
+    
+        Usando destructuring se puede realizar el intercambio sin necesidad de utilizar variables temporales*/
+
     [grilla[filaPos1][columnaPos1], grilla[filaPos2][columnaPos2]] = [grilla[filaPos2][columnaPos2], grilla[filaPos1][columnaPos1]]
 
 }
 
 // Actualiza la posición de la pieza vacía
 function actualizarPosicionVacia(nuevaFila, nuevaColumna) {
-    //COMPLETAR
+
     filaVacia = nuevaFila;
     columnaVacia = nuevaColumna;
 
@@ -238,10 +259,6 @@ function moverEnDireccion(direccion) {
         restarPuntos();
 
     }
-}
-
-function llenarTabla() {
-    document.getElementById("tabla-puntos").innerHTML = '<img class="imagen-pieza" src="images/final.png">';
 }
 
 
@@ -376,21 +393,7 @@ function capturarTeclas() {
     })
 }
 
-function ordenarPuntuaciones() {
-    var minIdx, temp,
-        len = puntuaciones.length;
-    for (var i = 0; i < len; i++) {
-        minIdx = i;
-        for (var j = i + 1; j < len; j++) {
-            if (puntuaciones[j][1] > puntuaciones[minIdx][1]) {
-                minIdx = j;
-            }
-        }
-        temp = puntuaciones[i];
-        puntuaciones[i] = puntuaciones[minIdx];
-        puntuaciones[minIdx] = temp;
-    }
-}
+
 /* Se inicia el rompecabezas mezclando las piezas 60 veces 
 y ejecutando la función para que se capturen las teclas que 
 presiona el usuario */
